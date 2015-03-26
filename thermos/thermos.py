@@ -23,5 +23,10 @@ def index():
                            user=User('Haris', 'Dimitriou'))
 
 
+@app.route('/add')
+def add_bookmark():
+    return render_template('add.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
