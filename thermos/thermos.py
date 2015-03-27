@@ -2,6 +2,8 @@ from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for, flash
 from logging import DEBUG
 
+from forms import BookmarkForm
+
 app = Flask(__name__)
 app.logger.setLevel(DEBUG)
 
@@ -9,9 +11,10 @@ app.config['SECRET_KEY'] = 'Z\x02\x99\x91Z\x16\xf9\xdf$\xd2Q\x1a\xfc\x1f\x0f=m'
 bookmarks = []
 
 
-def store_bookmark(url):
+def store_bookmark(url, description):
     bookmarks.append(dict(
         url=url,
+        description=description,
         user="xarisd",
         date=datetime.utcnow()
     ))
@@ -30,13 +33,22 @@ def index():
 
 @app.route('/add', methods=['GET', 'POST'])
 def add_bookmark():
-    if request.method == "POST":
-        url = request.form['url']
-        store_bookmark(url)
-        flash("Stored bookmark {}".format(url))
+    form = BookmarkForm()
+    if form.validate_on_submit():
+        url = form.url.data
+        description = form.description.data
+        store_bookmark(url, description)
+        flash("Stored bookmark {}".format(description))
         app.logger.debug('store url: ' + url)
         return redirect(url_for('index'))
-    return render_template('add.html')
+    return render_template('add.html', form=form)
+    # if request.method == "POST":
+    #     url = request.form['url']
+    #     store_bookmark(url)
+    #     flash("Stored bookmark {}".format(url))
+    #     app.logger.debug('store url: ' + url)
+    #     return redirect(url_for('index'))
+    # return render_template('add.html')
 
 
 @app.errorhandler(404)
