@@ -10,17 +10,24 @@ Thermos -- Add a URL
     <form action="" method="post">
       {{ form.hidden_tag() }}
 
-      <p>
+      <p{% if form.url.errors %} class="error" {% endif %}>
         Please enter your bookmark here:
         {{ form.url(size=50)}}
         <!-- <input type="text" name="url"> -->
       </p>
+      <div class="error">
+        <ul>
+          {% for error in form.url.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      </div>
       <p>
         Add an optional description here:
         {{ form.description(size=50)}}
         <!-- <input type="text" name="description"> -->
       </p>
-      <p>
+      <p class="submit">
         <button type="submit">Submit</button>
       </p>
     </form>

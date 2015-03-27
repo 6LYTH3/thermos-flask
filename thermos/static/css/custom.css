@@ -10,3 +10,16 @@
 article.flashes {
   margin-bottom: 1em;
 }
+
+.error, .error input , .error li{
+  color: red;
+}
+p.error ul {
+  margin-top: 0;
+}
+p.submit button {
+  margin-top: 20px;
+}
+input, button {
+  margin-left: 10px;
+}
