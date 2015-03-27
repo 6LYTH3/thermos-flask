@@ -11,8 +11,9 @@ class BookmarkForm(Form):
     description = StringField("Add an optional description here")
 
     def validate(self):
-        if not self.url.data.startswith("http://") or self.url.data.startswith("https://"):
-            self.url.data = "http://" + self.url.data
+        if not self.url.data.startswith("http://") \
+            or self.url.data.startswith("https://"):
+                self.url.data = "http://" + self.url.data
 
         if not Form.validate(self):
             return False
