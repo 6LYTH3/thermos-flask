@@ -39,3 +39,8 @@
 
 * Flask-Script
   * http://flask-script.readthedocs.org/en/latest/
+
+## Authentication
+
+  * Flask-Login
+    * https://flask-login.readthedocs.org/en/latest/
