@@ -11,9 +11,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.min.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+        {% block styles %}
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.min.css') }}">
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+        {% endblock %}
 
         <script src="../static/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     </head>
@@ -60,8 +62,10 @@
 
                 {% block sidebar %}
                     <aside>
-                        <h3>aside</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <h3>Tags</h3>
+                        {% for t in all_tags() %}
+                            <a href="{{ url_for('tag', name=t) }}">{{ t }}</a>
+                        {% endfor %}
                     </aside>
                 {% endblock %}
 
@@ -80,6 +84,9 @@
         {{ moment.include_moment() }}
 
         <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+        {% block scripts %}
+        {% endblock %}
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>

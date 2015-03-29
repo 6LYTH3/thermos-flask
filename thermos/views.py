@@ -98,6 +98,12 @@ def signup():
     return render_template('signup.html', form=form)
 
 
+@app.route('/tag/<name>')
+def tag(name):
+    tag = Tag.query.filter_by(name=name).first_or_404()
+    return render_template('tag.html', tag=tag)
+
+
 @app.errorhandler(403)
 def forbidden(e):
     return render_template('403.html'), 403
@@ -111,3 +117,10 @@ def page_not_found(e):
 @app.errorhandler(500)
 def server_error(e):
     return render_template('500.html'), 500
+
+
+@app.context_processor
+def inject_tags():
+    return dict(
+        all_tags=Tag.all
+    )
