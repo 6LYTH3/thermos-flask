@@ -7,3 +7,6 @@
 
 # Ignore database files
 *.db
+
+# Ignore Mac OS X temp files
+.DS_Store

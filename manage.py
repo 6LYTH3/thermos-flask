@@ -1,8 +1,8 @@
 #! /usr/bin/env python
 
-from flask.ext.script import Manager, prompt_bool
 from thermos import app, db
-from models import User
+from thermos.models import User
+from flask.ext.script import Manager, prompt_bool
 
 manager = Manager(app)
 
@@ -21,6 +21,7 @@ def dropdb():
     if prompt_bool("Are you sure you wamt to lloase all your data?"):
         db.drop_all()
         print("Dropped the database")
+
 
 if __name__ == "__main__":
     manager.run()
