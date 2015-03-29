@@ -34,6 +34,10 @@
 * SQLAlchemy
   * http://www.sqlalchemy.org/
   * http://docs.sqlalchemy.org/en/latest/
+* Flask-Migrate
+  * https://flask-migrate.readthedocs.org/en/latest/
+
+
 
 ## Development automation
 
