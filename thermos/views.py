@@ -1,6 +1,5 @@
 from flask import render_template, redirect, url_for, flash, request, abort
 from flask_login import login_required, login_user, logout_user, current_user
-# from datetime import datetime
 
 from thermos import app, db, login_manager
 from forms import BookmarkForm, LoginForm, SignupForm

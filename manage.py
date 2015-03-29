@@ -49,9 +49,11 @@ def insert_data():
                  'Url building in Flask', 'html5,webdev,flask,python')
     add_bookmark('https://pypi.python.org/pypi/Flask-Bootstrap',
                  'Flask-Bootstrap extension', 'html5,webdev,flask,python')
-    add_bookmark('http://jinja.pocoo.org/docs/dev/templates/#list-of-control-structures',
+    add_bookmark('http://jinja.pocoo.org/docs/dev/templates/'
+                 '#list-of-control-structures',
                  'Control structures in Jinja2', 'flask,python,views')
-    add_bookmark('https://flask-wtf.readthedocs.org/en/latest/', 'Flask-WTF documentation', 'python,flask,html5,webdev,forms')
+    add_bookmark('https://flask-wtf.readthedocs.org/en/latest/',
+                 'Flask-WTF documentation', 'python,flask,html5,webdev,forms')
 
     db.session.commit()
     print('Initialized the database')
