@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, abort
 from flask_login import login_required, login_user, logout_user, current_user
 # from datetime import datetime
 
@@ -34,7 +34,24 @@ def add_bookmark():
         flash("Stored {}".format(description))
         app.logger.debug('store url: ' + url)
         return redirect(url_for('index'))
-    return render_template('add.html', form=form)
+    render_template('bookmark_form.html', form=form, title='Add new bookmark')
+
+
+@app.route('/edit/<int:bookmark_id>', methods=['GET', 'POST'])
+@login_required
+def edit_bookmark(bookmark_id):
+    bookmark = Bookmark.query.get_or_404(bookmark_id)
+    if current_user != bookmark.user:
+        abort(403)
+    form = BookmarkForm(obj=bookmark)
+    if form.validate_on_submit():
+        form.populate_obj(bookmark)
+        db.session.commit()
+        flash("Stored '{}'".format(bookmark.description))
+        return redirect(url_for('user', username=current_user.username))
+    return render_template('bookmark_form.html',
+                           form=form,
+                           title='Edit bookmark')
 
 
 @app.route('/user/<username>')
@@ -76,6 +93,11 @@ def signup():
         flash('Welcome, {}! Please login.'.format(user.username))
         return redirect(url_for('login'))
     return render_template('signup.html', form=form)
+
+
+@app.errorhandler(403)
+def forbidden(e):
+    return render_template('403.html'), 403
 
 
 @app.errorhandler(404)
