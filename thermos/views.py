@@ -1,14 +1,15 @@
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request
+from flask_login import login_required, login_user, logout_user, current_user
 # from datetime import datetime
 
-from thermos import app, db
-from forms import BookmarkForm
+from thermos import app, db, login_manager
+from forms import BookmarkForm, LoginForm
 from models import User, Bookmark
 
 
-# Fake login
-def logged_in_user():
-    return User.query.filter_by(username='xarisd').first()
+@login_manager.user_loader
+def load_user(userid):
+    return User.query.get(userid)
 
 
 @app.route('/')
@@ -19,12 +20,13 @@ def index():
 
 
 @app.route('/add', methods=['GET', 'POST'])
+@login_required
 def add_bookmark():
     form = BookmarkForm()
     if form.validate_on_submit():
         url = form.url.data
         description = form.description.data
-        bm = Bookmark(user=logged_in_user(),
+        bm = Bookmark(user=current_user,
                       url=url,
                       description=description)
         db.session.add(bm)
@@ -39,6 +41,26 @@ def add_bookmark():
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('user.html', user=user)
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        # login and validate user
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is not None:
+            login_user(user, form.remember_me.data)
+            flash("Logged in successfully as {}".format(user.username))
+            return redirect(request.args.get('next') or url_for('index'))
+        flash("Incorrect username or password")
+    return render_template("login.html", form=form)
+
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 
 @app.errorhandler(404)
