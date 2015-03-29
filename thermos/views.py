@@ -37,7 +37,25 @@ def add_bookmark():
         flash("Stored {}".format(description))
         app.logger.debug('store url: ' + url)
         return redirect(url_for('index'))
-    render_template('bookmark_form.html', form=form, title='Add new bookmark')
+    return render_template('bookmark_form.html',
+                           form=form, title='Add new bookmark')
+
+
+@app.route('/delete/<int:bookmark_id>', methods=['GET', 'POST'])
+@login_required
+def delete_bookmark(bookmark_id):
+    bookmark = Bookmark.query.get_or_404(bookmark_id)
+    if current_user != bookmark.user:
+        abort(403)
+    if request.method == 'POST':
+        db.session.delete(bookmark)
+        db.session.commit()
+        flash("Deleted '{}'".format(bookmark.description))
+        return redirect(url_for('user', username=current_user.username))
+    else:
+        flash("Please confirm deleting bookmark")
+    return render_template('confirm_delete.html',
+                           bookmark=bookmark, nolinks=True)
 
 
 @app.route('/edit/<int:bookmark_id>', methods=['GET', 'POST'])
