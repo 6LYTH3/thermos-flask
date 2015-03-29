@@ -5,3 +5,5 @@
 # Ignore python cache files
 *.pyc
 
+# Ignore database files
+*.db
