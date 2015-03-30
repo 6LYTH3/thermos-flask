@@ -43,6 +43,8 @@ class Bookmark(db.Model):
         if string:
             self._tags = [Tag.get_or_create(name)
                           for name in string.split(",")]
+        else:
+            self._tags = []
 
     def __repr__(self):
         return "<Bookmark '{}': '{}'>".format(self.description, self.url)
