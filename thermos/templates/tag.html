@@ -7,7 +7,7 @@
 {% block content %}
   <article>
     <header>
-      <h1>Bookmarkes tagged {{ tag }}</h1>
+      <h1>Bookmarks tagged '{{ tag }}'</h1>
 
       {% if tag.bookmarks.count() > 0 %}
         {% with bookmarks = tag.bookmarks %}
