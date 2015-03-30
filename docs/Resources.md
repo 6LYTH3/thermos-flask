@@ -48,3 +48,26 @@
 
   * Flask-Login
     * https://flask-login.readthedocs.org/en/latest/
+
+## Debugging
+
+* Flask-DebugToolbar
+  * https://flask-debugtoolbar.readthedocs.org/en/latest/
+
+## Testing
+
+* Flask-Testing
+  * https://pythonhosted.org/Flask-Testing/
+* "Testing Flask Applications"
+  * http://flask.pocoo.org/docs/0.10/testing/
+* Nose (Python test runner)
+  * https://nose.readthedocs.org/en/latest/
+
+## Blueprints, Application Factories and Configuration
+
+* Modular Applications with Blueprints
+  * http://flask.pocoo.org/docs/latest/blueprints/
+* Application Factories
+  * http://flask.pocoo.org/docs/latest/patterns/appfactories
+* Configuration Handling
+  * http://flask.pocoo.org/docs/latest/config/
